@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.post("/", async (req, res) => {
-  var file = fs.readFileSync("./docs/test.ppt");
+  var file = new Buffer(req.body.fileData, "base64");
   var fileBuffer = await pdfConverter(file);
   fs.writeFileSync("./temp.pdf", fileBuffer);
   res.status(200).send("It Works");
