@@ -11,9 +11,10 @@ app.use(express.urlencoded({ limit: "50mb", extended: false }));
 
 app.post("/", async (req, res) => {
   let base64Image = req.body.fileData.split(";base64,").pop();
-  var file = new Buffer(base64Image, "base64");
-  var fileBuffer = await pdfConverter(file);
-  res.status(200).json({ fileData: new Buffer(fileBuffer).toString("base64") });
+  let file = new Buffer(base64Image, "base64");
+  let fileBuffer = await pdfConverter(file);
+  let converterBase64Image = "data:application/pdf;base64," + new Buffer(fileBuffer).toString("base64");
+  res.status(200).json({ fileData: converterBase64Image });
 });
 
 app.listen(port, () => {
