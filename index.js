@@ -1,5 +1,6 @@
 const express = require("express");
-const path = require("path");
+var fs = require("fs");
+
 const pdfConverter = require("./office-to-pdf");
 
 const port = process.env.PORT || "3000";
@@ -8,7 +9,10 @@ const app = express();
 app.use(express.json());
 
 app.post("/", async (req, res) => {
-  res.status(200).send(await pdfConverter(req.body.fileData));
+  var file = fs.readFileSync("./docs/test.ppt");
+  var fileBuffer = await pdfConverter(file);
+  fs.writeFileSync("./temp.pdf", fileBuffer);
+  res.status(200).send("It Works");
 });
 
 app.listen(port, () => {
