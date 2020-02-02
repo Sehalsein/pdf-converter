@@ -2,6 +2,7 @@ var exec = require("child_process").exec;
 var path = require("path");
 var tmp = require("temporary");
 var exec = require("child_process").exec;
+var fs = require("fs");
 
 module.exports = buffer => {
   return new Promise(function(resolve, reject) {
@@ -13,7 +14,7 @@ module.exports = buffer => {
 
       var cmd = "soffice --invisible --headless --convert-to pdf " + tempFile.path + " --outdir " + tempDir.path;
 
-      resolve(buffer);
+      //   resolve(buffer);
 
       exec(cmd, function(error) {
         if (error) {
