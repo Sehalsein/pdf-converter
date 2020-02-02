@@ -13,8 +13,8 @@ app.post("/", async (req, res) => {
   let base64Image = req.body.fileData.split(";base64,").pop();
   var file = new Buffer(base64Image, "base64");
   var fileBuffer = await pdfConverter(file);
-  fs.writeFileSync("./temp.pdf", fileBuffer);
-  res.status(200).send("It Works");
+  //   fs.writeFileSync("./temp.pdf", fileBuffer);
+  res.status(200).json({ data: new Buffer(fileBuffer).toString("base64") });
 });
 
 app.listen(port, () => {
